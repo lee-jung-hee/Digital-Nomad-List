@@ -1,19 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from "react";
 
-const useFilter = (items, activeFilter = 'all') => {
-  const [filteredItems, setFilteredItems] = useState([]);
+const useFilter = (todoList, activeFilter, searchTerm) => {
+  const filteredList = useMemo(() => {
+    let tempTodos = todoList;
 
-  useEffect(() => {
-    if (activeFilter === 'completed') {
-      setFilteredItems(items.filter((item) => item.checked));
-    } else if (activeFilter === 'active') {
-      setFilteredItems(items.filter((item) => !item.checked));
-    } else {
-      setFilteredItems(items);
+    if (activeFilter === "active") {
+      tempTodos = tempTodos.filter((todo) => !todo.checked);
+    } else if (activeFilter === "completed") {
+      tempTodos = tempTodos.filter((todo) => todo.checked);
     }
-  }, [items, activeFilter]);
 
-  return filteredItems;
+    if (searchTerm) {
+      tempTodos = tempTodos.filter((todo) =>
+        todo.content.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    return tempTodos;
+  }, [todoList, activeFilter, searchTerm]);
+
+  return filteredList;
 };
 
 export default useFilter;

@@ -1,76 +1,53 @@
 import { useState } from "react";
 
-function Todo({ todo, setTodoList }) {
-  const [inputValue, setInputValue] = useState(todo.content);
-  const [modify, setModify] = useState(false);
+function Todo({ todo, onUpdate, onDelete }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText] = useState(todo.content);
 
-  const handleDelete = () => {
-    setTodoList((prev) => prev.filter((list) => list.id !== todo.id));
+  const handleSave = () => {
+    if (editedText.trim()) {
+      onUpdate(todo.id, editedText, todo.checked);
+      setIsEditing(false);
+    }
   };
 
-  const handleCheck = () => {
-    setTodoList((prev) =>
-      prev.map((item) =>
-        item.id === todo.id ? { ...item, checked: !item.checked } : item
-      )
-    );
-  };
-
-  const handleModify = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleChangeBtn = () => {
-    setModify((prev) => !prev);
-
-    setTodoList((prev) =>
-      prev.map((item) =>
-        item.id === todo.id ? { ...item, content: inputValue } : item
-      )
-    );
-  };
-
-  const liStyle = {
-    textDecoration: todo.checked ? "line-through" : "none",
-    color: todo.checked ? "gray" : "black",
-  };
-
-  const spanStyle = {
-    display: modify ? "none" : "inline",
-    margin: 10,
-    flexGrow: 5,
-  };
-
-  const modifyStyle = {
-    display: modify ? "inline" : "none",
-    marginLeft: 10,
-    marginRight: 10,
-    width: "40%",
-    flexGrow: 5,
+  const handleCheckboxChange = () => {
+    onUpdate(todo.id, todo.content, !todo.checked);
   };
 
   return (
-    <>
-      <li style={liStyle}>
+    <li className={`todo-item ${todo.checked ? "completed" : ""}`}>
+      <input
+        type="checkbox"
+        checked={todo.checked || false}
+        onChange={handleCheckboxChange}
+      />
+      {isEditing ? (
         <input
-          type="checkbox"
-          checked={todo.checked || false}
-          onChange={handleCheck}
-          id="check"
+          type="text"
+          value={editedText}
+          onChange={(e) => setEditedText(e.target.value)}
+          className="edit-input"
         />
-        <input onChange={handleModify} style={modifyStyle} value={inputValue} />
-        <span style={spanStyle}>{todo.content} </span>
-        <span>Time : {todo.time}</span>
-        <span>
-          <button onClick={handleChangeBtn} style={{ color: "orange" }}>
+      ) : (
+        <span className="todo-content">{todo.content}</span>
+      )}
+      <span className="todo-time">{todo.time}</span>
+      <span className="todo-actions">
+        {isEditing ? (
+          <button onClick={handleSave} className="save-button">
+            Save
+          </button>
+        ) : (
+          <button onClick={() => setIsEditing(true)} className="edit-button">
             Edit
           </button>
-          <button onClick={handleDelete} style={{ color: "red" }}>
-            Delete
-          </button>
-        </span>
-      </li>
-    </>
+        )}
+        <button onClick={() => onDelete(todo.id)} className="delete-button">
+          Delete
+        </button>
+      </span>
+    </li>
   );
 }
 

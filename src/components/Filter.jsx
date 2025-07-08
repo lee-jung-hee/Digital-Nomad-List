@@ -1,38 +1,43 @@
-import TodoInput from "./TodoInput";
+import { useState } from "react";
 
-function Filter({ handleList, activeFilter, setActiveFilter }) {
-  const handleActiveFilter = (e) => {
-    setActiveFilter(e.target.value);
+function Filter({ activeFilter, onFilterChange, onSearch }) {
+  const [searchText, setSearchText] = useState("");
+
+  const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
+    onSearch(e.target.value);
   };
 
   return (
     <div className="filter-container">
-      <div>
-        Filter :
+      <div className="filter-buttons">
         <button
-          value={"all"}
           className={activeFilter === "all" ? "active" : ""}
-          onClick={handleActiveFilter}
+          onClick={() => onFilterChange("all")}
         >
           All
         </button>
         <button
-          value={"completed"}
-          className={activeFilter === "completed" ? "active" : ""}
-          onClick={handleActiveFilter}
-        >
-          Completed
-        </button>
-        <button
-          value={"active"}
           className={activeFilter === "active" ? "active" : ""}
-          onClick={handleActiveFilter}
+          onClick={() => onFilterChange("active")}
         >
           Active
         </button>
+        <button
+          className={activeFilter === "completed" ? "active" : ""}
+          onClick={() => onFilterChange("completed")}
+        >
+          Completed
+        </button>
       </div>
-      <div>
-        <TodoInput handleList={handleList} />
+      <div className="search-container">
+        <input
+          type="text"
+          value={searchText}
+          onChange={handleSearchChange}
+          placeholder="Search tasks..."
+          className="search-input-field"
+        />
       </div>
     </div>
   );

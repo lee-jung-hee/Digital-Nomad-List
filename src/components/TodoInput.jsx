@@ -1,23 +1,32 @@
-import { useRef } from "react";
+import { useState } from "react";
 
-function TodoInput({ handleList }) {
-  const inputValueRef = useRef(null);
+function TodoInput({ onAdd, onSearch, isSearch }) {
+  const [text, setText] = useState("");
 
-  const getInputValue = () => inputValueRef.current.value;
+  const handleChange = (e) => {
+    setText(e.target.value);
+    if (isSearch) {
+      onSearch(e.target.value);
+    }
+  };
+
+  const handleAdd = () => {
+    if (text.trim()) {
+      onAdd(text);
+      setText("");
+    }
+  };
 
   return (
-    <>
-      <input ref={inputValueRef} id="add-input" />
-      <button
-        onClick={() => {
-          handleList(getInputValue());
-          inputValueRef.current.value = "";
-        }}
-        style={{ background: "gold" }}
-      >
-        Add List
-      </button>
-    </>
+    <div className={`todo-input-container ${isSearch ? 'search-input' : ''}`}>
+      <input
+        type="text"
+        value={text}
+        onChange={handleChange}
+        placeholder={isSearch ? "Search..." : "Add a new task..."}
+      />
+      {!isSearch && <button onClick={handleAdd}>Add List</button>}
+    </div>
   );
 }
 

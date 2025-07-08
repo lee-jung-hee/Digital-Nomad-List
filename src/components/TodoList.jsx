@@ -1,13 +1,13 @@
 import Todo from "./Todo";
 
-function TodoList({ todoList, setTodoList }) {
+function TodoList({ todoList, onUpdate, onDelete }) {
   const skeletonUi = [...Array(10)];
   return (
     <ul>
       {todoList.length === 0
-        ? skeletonUi.map((item) => <li className="skeleton">{item}</li>)
+        ? skeletonUi.map((item, index) => <li key={index} className="skeleton">{item}</li>)
         : todoList.map((todo) => (
-            <Todo key={todo.id} todo={todo} setTodoList={setTodoList} />
+            <Todo key={todo.id} todo={todo} onUpdate={onUpdate} onDelete={onDelete} />
           ))}
     </ul>
   );
