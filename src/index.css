@@ -15,6 +15,7 @@
 
 body {
   margin: 0;
+  padding-top: 2.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,26 +24,31 @@ body {
   background-color: #faf8f5;
 }
 
-main {
-  background-color: #ffffff;
-  width: 80vw;
-  max-width: 90vw;
-  height: auto;
-  min-height: 70vh;
-  padding: 2rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
-}
-
 h1 {
+  margin: 0;
+  padding: 0;
   font-size: 2rem;
-  line-height: 1.2;
-  margin-bottom: 1rem;
   color: #333;
   text-align: center;
 }
 
-button {
+li span button {
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  text-align: center;
+  background-color: white;
+  cursor: pointer;
+  margin-left: 2px;
+  transition: 0.3s;
+}
+button:hover {
+  transition: 0.3s;
+  filter: opacity(60%);
+}
+
+.filter-container button {
   border-radius: 8px;
   border: none;
   padding: 0.5em 0.5em;
@@ -50,14 +56,9 @@ button {
   font-weight: 500;
   font-family: inherit;
   text-align: center;
-  background-color: white;
   cursor: pointer;
   margin-left: 8px;
   transition: 0.3s;
-}
-button:hover {
-  transition: 0.3s;
-  filter: opacity(60%);
 }
 
 input {
@@ -68,6 +69,10 @@ input {
   font-family: inherit;
   outline: none;
   transition: border-color 0.2s;
+}
+
+#add-input {
+  min-width: 200px;
 }
 
 ul,
@@ -96,6 +101,7 @@ li {
   background-color: #ffffff;
   width: 80vw;
   min-width: 550px;
+  max-width: 900px;
   padding: 20px;
 }
 
@@ -113,10 +119,52 @@ input[type="checkbox"] {
   font-weight: 800;
 }
 
-#todo-list {
-  padding-right: 100px;
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
 }
 
-#time {
-  padding-right: 130px;
+.time {
+  text-align: right;
+  color: #333;
+}
+
+@keyframes skeleton-gradient {
+  0% {
+    background-color: rgba(255, 208, 0, 0.1);
+  }
+  50% {
+    background-color: rgba(255, 208, 0, 0.3);
+  }
+  100% {
+    background-color: rgba(255, 208, 0, 0.1);
+  }
+}
+
+.skeleton {
+  animation: skeleton-gradient 1.5s infinite ease-in-out;
+  height: 44px; /* You can adjust height as needed */
+}
+
+.header {
+  background-color: gold;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 50px;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.quote {
+  text-align: right;
 }

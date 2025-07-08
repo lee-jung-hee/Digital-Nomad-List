@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import TodoList from "./components/TodoList";
-import TodoInput from "./components/TodoInput";
 import { supabase } from "./createClient";
+import Filter from "./components/Filter";
+import Sort from "./components/Sort";
+import Header from "./components/Header";
 
 function App() {
   function formatDate(dateStr) {
     const date = new Date(dateStr);
     return new Intl.DateTimeFormat("ko-KR", {
-      year: "numeric",
-      month: "numeric",
+      month: "long",
       day: "numeric",
       hour: "numeric",
       minute: "numeric",
-      hour12: false,
+      hour12: true,
     }).format(date);
   }
 
@@ -24,7 +25,7 @@ function App() {
       const { data, error } = await supabase
         .from("lists")
         .select("*")
-        .order("created_at", { ascending: false }); // 최신순으로 정렬
+        .order("created_at", { ascending: false });
 
       if (error) {
         console.error("Error fetching todos:", error);
@@ -37,7 +38,6 @@ function App() {
           checked: list.is_completed,
         }));
         setTodoList(formattedData);
-        console.log(formattedData);
       }
     }
 
@@ -66,18 +66,13 @@ function App() {
 
   return (
     <>
-      <h1>👑 Digital Nomad List</h1>
+      <Header formatDate={formatDate} />
       <div className="container">
-        <div className="sort-container">
-          <span>Check</span>
-          <span id="todo-list">Todo List</span>
-          <span id="time">Time</span>
-          <span>Modify</span>
-        </div>
+        <Filter handleList={handleList} />
+        <Sort />
         <div className="todo-container">
           <TodoList todoList={todoList} setTodoList={setTodoList} />
         </div>
-        <TodoInput handleList={handleList} />
       </div>
     </>
   );

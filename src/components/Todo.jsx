@@ -38,12 +38,15 @@ function Todo({ todo, setTodoList }) {
   const spanStyle = {
     display: modify ? "none" : "inline",
     margin: 10,
+    flexGrow: 5,
   };
 
   const modifyStyle = {
     display: modify ? "inline" : "none",
     marginLeft: 10,
     marginRight: 10,
+    width: "40%",
+    flexGrow: 5,
   };
 
   return (
@@ -57,7 +60,7 @@ function Todo({ todo, setTodoList }) {
         />
         <input onChange={handleModify} style={modifyStyle} value={inputValue} />
         <span style={spanStyle}>{todo.content} </span>
-        Time : {todo.time}
+        <span>Time : {todo.time}</span>
         <span>
           <button onClick={handleChangeBtn} style={{ color: "orange" }}>
             Edit

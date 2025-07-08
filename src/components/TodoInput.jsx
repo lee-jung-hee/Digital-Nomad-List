@@ -7,7 +7,7 @@ function TodoInput({ handleList }) {
 
   return (
     <>
-      <input ref={inputValueRef} />
+      <input ref={inputValueRef} id="add-input" />
       <button
         onClick={() => {
           handleList(getInputValue());
