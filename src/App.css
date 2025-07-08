@@ -4,3 +4,7 @@
   padding: 2rem;
   text-align: center;
 }
+
+.filter-container button.active {
+  background-color: gold;
+}

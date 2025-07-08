@@ -2,8 +2,6 @@ import Todo from "./Todo";
 
 function TodoList({ todoList, setTodoList }) {
   const skeletonUi = [...Array(10)];
-  console.log(skeletonUi);
-
   return (
     <ul>
       {todoList.length === 0

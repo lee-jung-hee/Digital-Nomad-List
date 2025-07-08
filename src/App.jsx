@@ -5,6 +5,7 @@ import { supabase } from "./createClient";
 import Filter from "./components/Filter";
 import Sort from "./components/Sort";
 import Header from "./components/Header";
+import useFilter from "./hooks/useFilter";
 
 function App() {
   function formatDate(dateStr) {
@@ -19,6 +20,9 @@ function App() {
   }
 
   const [todoList, setTodoList] = useState([]);
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const filteredTodoList = useFilter(todoList, activeFilter);
 
   useEffect(() => {
     async function fetchTodos() {
@@ -68,10 +72,14 @@ function App() {
     <>
       <Header formatDate={formatDate} />
       <div className="container">
-        <Filter handleList={handleList} />
+        <Filter
+          handleList={handleList}
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+        />
         <Sort />
         <div className="todo-container">
-          <TodoList todoList={todoList} setTodoList={setTodoList} />
+          <TodoList todoList={filteredTodoList} setTodoList={setTodoList} />
         </div>
       </div>
     </>
