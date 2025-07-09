@@ -145,7 +145,8 @@ input[type="checkbox"] {
 
 .skeleton {
   animation: skeleton-gradient 1.5s infinite ease-in-out;
-  height: 44px; /* You can adjust height as needed */
+  padding: 10px;
+  height: 40px;
 }
 
 .header {

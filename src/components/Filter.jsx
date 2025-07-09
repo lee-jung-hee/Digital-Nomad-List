@@ -35,8 +35,9 @@ function Filter({ activeFilter, onFilterChange, onSearch }) {
           type="text"
           value={searchText}
           onChange={handleSearchChange}
-          placeholder="Search tasks..."
+          placeholder="🔎 Search list"
           className="search-input-field"
+          style={{ minWidth: "90%" }}
         />
       </div>
     </div>

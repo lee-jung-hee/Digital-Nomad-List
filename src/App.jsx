@@ -12,7 +12,7 @@ const todoReducer = (state, action) => {
   switch (action.type) {
     case "SET_TODOS":
       return { ...state, todos: action.payload };
-    case "ADD_TODO":
+    case "CREATE_TODO":
       return { ...state, todos: [action.payload, ...state.todos] };
     case "UPDATE_TODO":
       return {
@@ -100,7 +100,7 @@ function App() {
         time: formatDate(data[0].created_at),
         checked: data[0].is_completed,
       };
-      dispatch({ type: "ADD_TODO", payload: newTodo });
+      dispatch({ type: "CREATE_TODO", payload: newTodo });
     }
   };
 

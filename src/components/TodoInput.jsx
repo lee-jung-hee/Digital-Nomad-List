@@ -18,14 +18,14 @@ function TodoInput({ onAdd, onSearch, isSearch }) {
   };
 
   return (
-    <div className={`todo-input-container ${isSearch ? 'search-input' : ''}`}>
+    <div className={`todo-input-container ${isSearch ? "search-input" : ""}`}>
       <input
         type="text"
         value={text}
         onChange={handleChange}
-        placeholder={isSearch ? "Search..." : "Add a new task..."}
+        placeholder={isSearch ? "Search..." : "Enter the new todo list content"}
       />
-      {!isSearch && <button onClick={handleAdd}>Add List</button>}
+      {!isSearch && <button onClick={handleAdd}>➕ Add List</button>}
     </div>
   );
 }
